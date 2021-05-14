@@ -1,11 +1,54 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'actions-argocd'
+description: 'D-SHARE Inc. ArgoCD Manifest Generator'
+author: 'd-share <dev@dshare.co.kr>'
+branding:
+  icon: 'cloud'
+  color: 'orange'
 inputs:
-  milliseconds: # change this
+  action:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Action type. (put, delete).'
+  manifest_path:
+    required: true
+    default: 'values.yaml'
+    description: 'ArgoCD Manifest (helm chart values.yaml) path'
+  enable_update:
+    required: e
+    default: 'true'
+    description: 'Allow update'
+  enable_permanent_protection:
+    required: false
+    default: 'true'
+    description: 'Protect by lifecycle'
+  env:
+    required: true
+    description: 'dev, stage, prod'
+  key:
+    required: true
+    description: 'Unique key'
+  lifecycle:
+    required: false
+    default: 'temporary'
+    description: 'temporary, permanent'
+  image_tag:
+    required: true
+    description: 'Docker image tag'
+  deployment_strategy:
+    required: false
+    default: 'blue_green'
+    description: 'blue_green or canary'
+  action_type:
+    required: true
+    description: 'Github trigger type (pull_request, push)'
+  action_worker_number:
+    required: true
+    description: 'Github trigger action work number'
+  action_commit_message:
+    required: true
+    description: 'Github trigger action commit message'
+  action_commit_sha:
+    required: true
+    description: 'Github trigger action commit sha'
 runs:
   using: 'node12'
   main: 'dist/index.js'

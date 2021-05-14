@@ -1,0 +1,79 @@
+name: api
+description: "Hey, yo, i-am-description!"
+
+repository:
+  name: naemo-app-modules
+  url: git://GIT_ADDRESS
+
+image:
+  repository: ""
+  imagePullPolicy: ""
+
+destination:
+  namespace: api
+  clusters:
+    dev:
+      name: Some (Development)
+      cluster: eks-name-dev
+    stage:
+      name: Some (Stage)
+      cluster: eks-name-stage
+    prod:
+      name: Some (Production)
+      cluster: eks-name-prod
+
+deployment:
+  environments:
+    dev:
+      blue_green:
+        autoPromotionEnabled: true
+        activeService:
+        previewService:
+  blue_green:
+    autoPromotionEnabled: true
+    activeService:
+    previewService:
+  canary:
+    maxSurge: "25%"
+    maxUnavailable: 0
+    steps:
+      - setWeight: 10
+      - pause:
+          duration: 1h # 1 hour
+      - setWeight: 20
+      - pause: { } # pause indefinitely
+
+application:
+  health:
+    type: HTTP
+    port: 5000
+    path: /actuator/health
+
+ingress:
+  enabled: true
+  environments:
+    dev:
+      domain:
+        type: primary # primary / subdomain
+        enable_www: true # primary only.
+        primary: "my_primary.domain.io"
+      acm:
+        - "1"
+        - "2"
+      security_groups:
+        - "1"
+        - "2"
+
+environments:
+  - env: dev
+    lifecycle: temporary # temporary / permanent
+    key: 183 # Application key. (branch-name or pull_request, issue number)
+    action_type: pull_request # push, pull_request
+    action_labels:
+      worker_number: '' # github action number
+      commit_message: ''
+      commit_sha: ''
+    image:
+      tag: "IMAGE_TAG"
+    deployment:
+      strategy: blue_green
