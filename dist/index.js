@@ -44,11 +44,12 @@ function run() {
             const action = util_1.getActionInput('action', true, ['put', 'delete']);
             const manifestPath = util_1.getActionInput('manifest_path', true, []);
             const options = {
-                enable_update: util_1.getActionInput('enable_update', true, ['true', 'false'], 'true') === 'true',
-                enable_permanent_protection: util_1.getActionInput('enable_permanent_protection', true, ['true', 'false'], 'true') === 'true',
+                enable_update: util_1.getActionInput('enable_update', false, ['true', 'false'], 'true') === 'true',
+                enable_permanent_protection: util_1.getActionInput('enable_permanent_protection', false, ['true', 'false'], 'true') === 'true',
             };
             const input = util_1.inputs();
             core.debug(`🔍 Input: ${JSON.stringify(input)}`);
+            core.debug(`🔍 Options: ${options.enable_update ? 'ENABLE_UPDATE' : 'DISABLE_UPDATE'} / ${options.enable_permanent_protection ? 'ENABLE_PER_PROTECT' : 'DISABLE_PER_PROTECT'}`);
             const originalManifest = util_1.read(manifestPath);
             util_1.write('.manifest.bak.yaml', originalManifest);
             core.debug(`🔍 File content: ${JSON.stringify(originalManifest)}`);
