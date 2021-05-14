@@ -13,7 +13,7 @@ inputs:
     default: 'values.yaml'
     description: 'ArgoCD Manifest (helm chart values.yaml) path'
   enable_update:
-    required: e
+    required: false
     default: 'true'
     description: 'Allow update'
   enable_permanent_protection:
