@@ -31,18 +31,18 @@ export interface IManifest {
   application: {
     health: {
       type: string
-      port: number
+      port: string
       path: string
     }
     [key: string]: any
   }
   ingress: {
-    enabled: boolean
+    enabled: 'true' | 'false',
     environments: {
       [key: string]: {
         domain: {
           type: 'primary' | 'subdomain'
-          enable_www: boolean,
+          enable_www: 'true' | 'false',
           primary: string
         }
         acm: string[]

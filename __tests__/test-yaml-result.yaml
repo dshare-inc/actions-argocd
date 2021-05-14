@@ -1,27 +1,27 @@
 application:
   health:
     path: /actuator/health
-    port: 5000
+    port: '5000'
     type: HTTP
 deployment:
   blue_green:
     activeService: null
-    autoPromotionEnabled: true
+    autoPromotionEnabled: 'true'
     previewService: null
   canary:
     maxSurge: 25%
-    maxUnavailable: 0
+    maxUnavailable: '0'
     steps:
-      - setWeight: 10
+      - setWeight: '10'
       - pause:
           duration: 1h
-      - setWeight: 20
+      - setWeight: '20'
       - pause: {}
   environments:
     dev:
       blue_green:
         activeService: null
-        autoPromotionEnabled: true
+        autoPromotionEnabled: 'true'
         previewService: null
 description: 'Hey, yo, i-am-description!'
 destination:
@@ -53,14 +53,14 @@ image:
   imagePullPolicy: ''
   repository: ''
 ingress:
-  enabled: true
+  enabled: 'true'
   environments:
     dev:
       acm:
         - '1'
         - '2'
       domain:
-        enable_www: true
+        enable_www: 'true'
         primary: my_primary.domain.io
         type: primary
       security_groups:

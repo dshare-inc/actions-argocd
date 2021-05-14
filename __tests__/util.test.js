@@ -344,83 +344,23 @@ describe('yaml', () => {
         const result = util_1.read(`${__dirname}/test-yaml.yaml`);
         expect(result)
             .toEqual({
-            "application": { "health": { "path": "/actuator/health", "port": 5000, "type": "HTTP" } },
+            "application": { "health": { "path": "/actuator/health", "port": "5000", "type": "HTTP" } },
             "deployment": {
                 "blue_green": {
                     "activeService": null,
-                    "autoPromotionEnabled": true,
+                    "autoPromotionEnabled": "true",
                     "previewService": null
                 },
                 "canary": {
                     "maxSurge": "25%",
-                    "maxUnavailable": 0,
-                    "steps": [{ "setWeight": 10 }, { "pause": { "duration": "1h" } }, { "setWeight": 20 }, { "pause": {} }]
+                    "maxUnavailable": "0",
+                    "steps": [{ "setWeight": "10" }, { "pause": { "duration": "1h" } }, { "setWeight": "20" }, { "pause": {} }]
                 },
                 "environments": {
                     "dev": {
                         "blue_green": {
                             "activeService": null,
-                            "autoPromotionEnabled": true,
-                            "previewService": null
-                        }
-                    }
-                }
-            },
-            "description": "Hey, yo, i-am-description!",
-            "destination": {
-                "clusters": {
-                    "dev": { "cluster": "eks-name-dev", "name": "Some (Development)" },
-                    "prod": { "cluster": "eks-name-prod", "name": "Some (Production)" },
-                    "stage": { "cluster": "eks-name-stage", "name": "Some (Stage)" }
-                }, "namespace": "api"
-            },
-            "environments": [{
-                    "action_labels": {
-                        "commit_message": "",
-                        "commit_sha": "",
-                        "worker_number": ""
-                    },
-                    "action_type": "pull_request",
-                    "deployment": { "strategy": "blue_green" },
-                    "env": "dev",
-                    "image": { "tag": "IMAGE_TAG" },
-                    "key": 183,
-                    "lifecycle": "temporary"
-                }],
-            "image": { "imagePullPolicy": "", "repository": "" },
-            "ingress": {
-                "enabled": true,
-                "environments": {
-                    "dev": {
-                        "acm": ["1", "2"],
-                        "domain": { "enable_www": true, "primary": "my_primary.domain.io", "type": "primary" },
-                        "security_groups": ["1", "2"]
-                    }
-                }
-            },
-            "name": "api",
-            "repository": { "name": "naemo-app-modules", "url": "git://GIT_ADDRESS" }
-        });
-    });
-    it('write', () => {
-        const content = {
-            "application": { "health": { "path": "/actuator/health", "port": 5000, "type": "HTTP" } },
-            "deployment": {
-                "blue_green": {
-                    "activeService": null,
-                    "autoPromotionEnabled": true,
-                    "previewService": null
-                },
-                "canary": {
-                    "maxSurge": "25%",
-                    "maxUnavailable": 0,
-                    "steps": [{ "setWeight": 10 }, { "pause": { "duration": "1h" } }, { "setWeight": 20 }, { "pause": {} }]
-                },
-                "environments": {
-                    "dev": {
-                        "blue_green": {
-                            "activeService": null,
-                            "autoPromotionEnabled": true,
+                            "autoPromotionEnabled": "true",
                             "previewService": null
                         }
                     }
@@ -449,11 +389,71 @@ describe('yaml', () => {
                 }],
             "image": { "imagePullPolicy": "", "repository": "" },
             "ingress": {
-                "enabled": true,
+                "enabled": "true",
                 "environments": {
                     "dev": {
                         "acm": ["1", "2"],
-                        "domain": { "enable_www": true, "primary": "my_primary.domain.io", "type": "primary" },
+                        "domain": { "enable_www": "true", "primary": "my_primary.domain.io", "type": "primary" },
+                        "security_groups": ["1", "2"]
+                    }
+                }
+            },
+            "name": "api",
+            "repository": { "name": "naemo-app-modules", "url": "git://GIT_ADDRESS" }
+        });
+    });
+    it('write', () => {
+        const content = {
+            "application": { "health": { "path": "/actuator/health", "port": "5000", "type": "HTTP" } },
+            "deployment": {
+                "blue_green": {
+                    "activeService": null,
+                    "autoPromotionEnabled": "true",
+                    "previewService": null
+                },
+                "canary": {
+                    "maxSurge": "25%",
+                    "maxUnavailable": "0",
+                    "steps": [{ "setWeight": "10" }, { "pause": { "duration": "1h" } }, { "setWeight": "20" }, { "pause": {} }]
+                },
+                "environments": {
+                    "dev": {
+                        "blue_green": {
+                            "activeService": null,
+                            "autoPromotionEnabled": "true",
+                            "previewService": null
+                        }
+                    }
+                }
+            },
+            "description": "Hey, yo, i-am-description!",
+            "destination": {
+                "clusters": {
+                    "dev": { "cluster": "eks-name-dev", "name": "Some (Development)" },
+                    "prod": { "cluster": "eks-name-prod", "name": "Some (Production)" },
+                    "stage": { "cluster": "eks-name-stage", "name": "Some (Stage)" }
+                }, "namespace": "api"
+            },
+            "environments": [{
+                    "action_labels": {
+                        "commit_message": "",
+                        "commit_sha": "",
+                        "worker_number": ""
+                    },
+                    "action_type": "pull_request",
+                    "deployment": { "strategy": "blue_green" },
+                    "env": "dev",
+                    "image": { "tag": "IMAGE_TAG" },
+                    "key": "183",
+                    "lifecycle": "temporary"
+                }],
+            "image": { "imagePullPolicy": "", "repository": "" },
+            "ingress": {
+                "enabled": "true",
+                "environments": {
+                    "dev": {
+                        "acm": ["1", "2"],
+                        "domain": { "enable_www": "true", "primary": "my_primary.domain.io", "type": "primary" },
                         "security_groups": ["1", "2"]
                     }
                 }
