@@ -88,12 +88,12 @@ export const deleteEnv = (put: IEnvironment, manifest: IManifest, options: IOpti
 }
 
 export const existsEnv = (env: string, key: string, manifest: IManifest): boolean => manifest.environments
-    .filter(environment => environment.env === env && environment.key === key)
+    .filter(environment => environment.env.toString() === env && environment.key === key)
     .length > 0;
 
 export const getEnv = (env: string, key: string, manifest: IManifest): IEnvironment => {
   const result = manifest.environments
-  .find(m => m.env === env && m.key === key);
+  .find(m => m.env.toString() === env && m.key === key);
 
   if (result === undefined) {
     core.debug(JSON.stringify(manifest));
@@ -104,5 +104,5 @@ export const getEnv = (env: string, key: string, manifest: IManifest): IEnvironm
 }
 
 export const getEnvIndexOf = (env: string, key: string, manifest: IManifest): number => manifest.environments
-  .findIndex(environment => environment.env === env && environment.key === key);
+  .findIndex(environment => environment.env.toString() === env && environment.key === key);
 

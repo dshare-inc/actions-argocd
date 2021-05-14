@@ -39,6 +39,7 @@ async function run(): Promise<void> {
     core.setOutput('path', manifestPath);
   } catch (e) {
     core.error(`🚨 Exception: ${e.message}`);
+    core.setFailed(`🚨 Exception: ${e.message}`);
   }
 }
 

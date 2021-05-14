@@ -70,6 +70,7 @@ function run() {
         }
         catch (e) {
             core.error(`🚨 Exception: ${e.message}`);
+            core.setFailed(`🚨 Exception: ${e.message}`);
         }
     });
 }
@@ -185,12 +186,12 @@ const deleteEnv = (put, manifest, options) => {
 };
 exports.deleteEnv = deleteEnv;
 const existsEnv = (env, key, manifest) => manifest.environments
-    .filter(environment => environment.env === env && environment.key === key)
+    .filter(environment => environment.env.toString() === env && environment.key === key)
     .length > 0;
 exports.existsEnv = existsEnv;
 const getEnv = (env, key, manifest) => {
     const result = manifest.environments
-        .find(m => m.env === env && m.key === key);
+        .find(m => m.env.toString() === env && m.key === key);
     if (result === undefined) {
         core.debug(JSON.stringify(manifest));
         throw new Error(`Environment ${env} - ${key} not exists (find)`);
@@ -199,7 +200,7 @@ const getEnv = (env, key, manifest) => {
 };
 exports.getEnv = getEnv;
 const getEnvIndexOf = (env, key, manifest) => manifest.environments
-    .findIndex(environment => environment.env === env && environment.key === key);
+    .findIndex(environment => environment.env.toString() === env && environment.key === key);
 exports.getEnvIndexOf = getEnvIndexOf;
 
 
