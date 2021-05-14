@@ -112,8 +112,9 @@ const yaml = __importStar(__webpack_require__(917));
 const fs = __importStar(__webpack_require__(747));
 const clone_1 = __importDefault(__webpack_require__(606));
 const core = __importStar(__webpack_require__(186));
+const js_yaml_1 = __webpack_require__(917);
 function getActionInput(key, required, restricted = [], defaults) {
-    const input = core.getInput(key, { required });
+    const input = core.getInput(key, { required }).toString();
     if (input === '' && defaults !== undefined) {
         return defaults;
     }
@@ -125,8 +126,8 @@ function getActionInput(key, required, restricted = [], defaults) {
 exports.getActionInput = getActionInput;
 const inputs = () => {
     return {
-        env: getActionInput('env', true, []),
-        key: getActionInput('key', true, []),
+        env: getActionInput('env', true, []).toString(),
+        key: getActionInput('key', true, []).toString(),
         lifecycle: getActionInput('lifecycle', false, ['temporary', 'permanent'], 'temporary'),
         action_type: getActionInput('action_type', true, ['push', 'pull_request']),
         action_labels: {
@@ -144,7 +145,7 @@ const inputs = () => {
 };
 exports.inputs = inputs;
 const read = (path) => {
-    const result = yaml.load(fs.readFileSync(path).toString());
+    const result = yaml.load(fs.readFileSync(path).toString(), { schema: js_yaml_1.FAILSAFE_SCHEMA });
     if (result === undefined) {
         throw new Error(`Read error! ${path}.`);
     }
@@ -164,10 +165,10 @@ const putEnv = (put, manifest, options) => {
     }
     const result = clone_1.default(manifest);
     if (exports.existsEnv(put.env, put.key, manifest)) {
-        result.environments[exports.getEnvIndexOf(put.env, put.key, result)] = put;
+        result.environments[exports.getEnvIndexOf(put.env, put.key, result)] = Object.assign(Object.assign({}, put), { key: put.key.toString() });
         return result;
     }
-    result.environments.push(put);
+    result.environments.push(Object.assign(Object.assign({}, put), { key: put.key.toString() }));
     return result;
 };
 exports.putEnv = putEnv;
@@ -186,12 +187,12 @@ const deleteEnv = (put, manifest, options) => {
 };
 exports.deleteEnv = deleteEnv;
 const existsEnv = (env, key, manifest) => manifest.environments
-    .filter(environment => environment.env.toString() === env && environment.key === key)
+    .filter(environment => environment.env === env && environment.key === key)
     .length > 0;
 exports.existsEnv = existsEnv;
 const getEnv = (env, key, manifest) => {
     const result = manifest.environments
-        .find(m => m.env.toString() === env && m.key === key);
+        .find(m => m.env === env && m.key === key);
     if (result === undefined) {
         core.debug(JSON.stringify(manifest));
         throw new Error(`Environment ${env} - ${key} not exists (find)`);
@@ -200,7 +201,7 @@ const getEnv = (env, key, manifest) => {
 };
 exports.getEnv = getEnv;
 const getEnvIndexOf = (env, key, manifest) => manifest.environments
-    .findIndex(environment => environment.env.toString() === env && environment.key === key);
+    .findIndex(environment => environment.env === env && environment.key === key);
 exports.getEnvIndexOf = getEnvIndexOf;
 
 
