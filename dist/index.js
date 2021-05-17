@@ -132,8 +132,8 @@ const inputs = () => {
         action_type: getActionInput('action_type', true, ['push', 'pull_request']),
         action_labels: {
             worker_number: getActionInput('action_worker_number', true),
-            commit_message: getActionInput('action_commit_message', true),
-            commit_sha: getActionInput('action_commit_sha', true),
+            commit_message: getActionInput('action_commit_message', false, [], ''),
+            commit_sha: getActionInput('action_commit_sha', false, [], ''),
         },
         image: {
             tag: getActionInput('image_tag', true),

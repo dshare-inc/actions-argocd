@@ -27,8 +27,8 @@ export const inputs = (): IEnvironment => {
     action_type: getActionInput<'push' | 'pull_request'>('action_type', true, ['push', 'pull_request']),
     action_labels: {
       worker_number: getActionInput<string>('action_worker_number', true),
-      commit_message: getActionInput<string>('action_commit_message', true),
-      commit_sha: getActionInput<string>('action_commit_sha', true),
+      commit_message: getActionInput<string>('action_commit_message', false, [], ''),
+      commit_sha: getActionInput<string>('action_commit_sha', false, [], ''),
     },
     image: {
       tag: getActionInput<string>('image_tag', true),

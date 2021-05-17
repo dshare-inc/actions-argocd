@@ -44,10 +44,10 @@ inputs:
     required: true
     description: 'Github trigger action work number'
   action_commit_message:
-    required: true
+    required: false
     description: 'Github trigger action commit message'
   action_commit_sha:
-    required: true
+    required: false
     description: 'Github trigger action commit sha'
 runs:
   using: 'node12'
