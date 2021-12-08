@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/clone": "^2.1.0",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
     "@types/js-yaml": "^4.0.3",
     "@types/node": "^16.11.11",
     "@typescript-eslint/parser": "^4.29.2",
